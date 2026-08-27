@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автоподбор под ключ — каталог в МАКС</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;--surface:#141414;--line:#262626;--text:#f2f2f2;--muted:#8a8a8a;
+    --accent:#ffc000;--accent-ink:#0a0a0a;--ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;border-radius:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:"Barlow Condensed",system-ui,sans-serif;
+    font-size:18px;line-height:1.35;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{width:min(1180px,92vw);margin-inline:auto}
+  .eyebrow{font-weight:600;font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+  h1,h2,h3{text-transform:uppercase;font-weight:800;line-height:.98;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .accent{color:var(--accent)}
+
+  .btn{display:inline-flex;align-items:center;gap:.6em;background:var(--accent);color:var(--accent-ink);
+    font-weight:800;font-size:19px;letter-spacing:.04em;text-transform:uppercase;padding:18px 34px;
+    border:2px solid var(--accent);cursor:pointer;
+    transition:background .25s var(--ease),color .25s var(--ease),transform .15s var(--ease)}
+  .btn:hover{background:transparent;color:var(--accent)}
+  .btn:active{transform:translateY(1px)}
+  .btn .arw{transition:transform .25s var(--ease)}
+  .btn:hover .arw{transform:translateX(5px)}
+  .btn--ghost{background:transparent;color:var(--text);border-color:var(--line)}
+  .btn--ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn--lg{font-size:24px;padding:24px 46px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+  /* MAX badge (текстовый, не логотип) */
+  .max{display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:.82em;
+    letter-spacing:.02em;background:var(--accent-ink);color:var(--accent);padding:.15em .5em;
+    border:2px solid currentColor}
+  .btn .max{background:var(--accent-ink);color:var(--accent)}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.82);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-weight:900;font-size:24px;letter-spacing:.02em;text-transform:uppercase}
+  .logo b{color:var(--accent)}
+  .bar-right{display:flex;align-items:center;gap:26px}
+  .phone{font-weight:700;font-size:21px;white-space:nowrap}
+  .bar .btn{padding:11px 22px;font-size:15px}
+  @media(max-width:760px){.bar .btn,.phone{display:none}}
+
+  .hero{position:relative;padding:96px 0 88px;overflow:hidden}
+  .hero-stripe{position:absolute;top:-20%;right:-14%;width:60vw;height:150%;background:var(--accent);
+    transform:skewX(-14deg);opacity:.06;pointer-events:none}
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+  h1{font-size:clamp(44px,7.2vw,92px);font-weight:900}
+  .hero p.lead{margin-top:22px;font-size:clamp(18px,2.4vw,23px);color:var(--muted);max-width:34ch;font-weight:500}
+  .hero-cta{margin-top:34px;display:flex;gap:16px;flex-wrap:wrap}
+  .hero-note{margin-top:22px;font-size:15px;color:var(--muted);letter-spacing:.02em}
+  .hero-note b{color:var(--text)}
+  .hero-card{border:1px solid var(--line);background:var(--surface);padding:34px 32px}
+  .hero-card .k{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .hero-card .k:last-child{border-bottom:0}
+  .hero-card .num{color:var(--accent);font-weight:900;font-size:30px;line-height:1;min-width:42px}
+  .hero-card .k h4{text-transform:uppercase;font-weight:700;font-size:19px;letter-spacing:.01em}
+  .hero-card .k span{color:var(--muted);font-size:15.5px;font-weight:500}
+
+  section.block{padding:78px 0;border-top:1px solid var(--line)}
+  .sec-head{margin-bottom:44px;max-width:52ch}
+  .sec-head h2{font-size:clamp(30px,4.6vw,50px);margin-top:14px}
+
+  .benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  @media(max-width:860px){.benefits{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.benefits{grid-template-columns:1fr}}
+  .benefit{background:var(--bg);padding:30px 26px;transition:background .3s var(--ease)}
+  .benefit:hover{background:var(--surface)}
+  .benefit .mark{width:34px;height:4px;background:var(--accent);margin-bottom:20px}
+  .benefit h3{font-size:22px;font-weight:800}
+  .benefit p{margin-top:10px;color:var(--muted);font-size:16px;font-weight:500}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+  @media(max-width:800px){.steps{grid-template-columns:1fr}}
+  .step{border-top:3px solid var(--accent);padding-top:22px}
+  .step .n{font-weight:900;font-size:15px;letter-spacing:.24em;color:var(--accent)}
+  .step h3{margin-top:12px;font-size:26px}
+  .step p{margin-top:12px;color:var(--muted);font-size:16.5px;font-weight:500}
+
+  /* ---- catalog CTA (signature) ---- */
+  .catalog{position:relative;background:var(--surface);border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);overflow:hidden}
+  .catalog .band{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(115deg,transparent 60%,rgba(255,192,0,.08) 60%)}
+  .catalog-in{position:relative;padding:96px 0;text-align:center}
+  .catalog h2{font-size:clamp(34px,6vw,68px)}
+  .catalog p{margin:20px auto 0;max-width:46ch;color:var(--muted);font-size:clamp(17px,2.2vw,21px);font-weight:500}
+  .catalog .cta-row{margin-top:40px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+  .catalog .sub{margin-top:22px;font-size:15px;color:var(--muted);letter-spacing:.02em}
+  @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+  .catalog .btn--lg .arw{animation:nudge 1.8s var(--ease) infinite}
+
+  .reveal{opacity:0;transform:translateY(26px)}
+  .reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+
+  footer{border-top:1px solid var(--line);padding:52px 0 40px;color:var(--muted)}
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start}
+  footer .logo{margin-bottom:14px}
+  .foot-req{font-size:14.5px;font-weight:500;line-height:1.7;max-width:52ch}
+  .foot-contact{font-size:20px;font-weight:700;color:var(--text)}
+  .foot-contact span{display:block;color:var(--muted);font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+  .disclaimer{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;line-height:1.6}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="logo">АВТО<b>·</b>ПОДБОР</div>
+    <div class="bar-right">
+      <a class="phone" href="tel:+79226816002">+7 (922) 681-60-02</a>
+      <!-- ЗАМЕНИ href на ссылку вашего канала/каталога в МАКС -->
+      <a class="btn" href="https://max.ru/join/glXZWQK4GgrXRSErrwurHMcJAwuxiQA-AGvKckqP5Hs" target="_blank" rel="noopener" data-goal="catalog">Каталог в <span class="max">МАКС</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-stripe" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow reveal">Подбор · проверка · сопровождение сделки</div>
+      <h1 class="reveal">Подберём и проверим<br><span class="accent">автомобиль</span> под ключ</h1>
+      <p class="lead reveal">Актуальные варианты — в нашем каталоге в МАКС. Эксперт поможет выбрать, проверит состояние и юридическую чистоту и проведёт сделку.</p>
+      <div class="hero-cta reveal">
+        <!-- ЗАМЕНИ href на ссылку вашего канала/каталога в МАКС -->
+        <a class="btn" href="https://max.ru/join/glXZWQK4GgrXRSErrwurHMcJAwuxiQA-AGvKckqP5Hs" target="_blank" rel="noopener" data-goal="catalog">Смотреть каталог в <span class="max">МАКС</span> <span class="arw">→</span></a>
+      </div>
+      <div class="hero-note reveal">Работаем по договору · <b>Бесплатная консультация</b></div>
+    </div>
+    <div class="hero-card reveal">
+      <div class="k"><div class="num">01</div><div><h4>Экономия времени</h4><span>Не тратите недели на просмотры — варианты собраны в каталоге</span></div></div>
+      <div class="k"><div class="num">02</div><div><h4>Без переплат и рисков</h4><span>Проверяем цены, историю и состояние до покупки</span></div></div>
+      <div class="k"><div class="num">03</div><div><h4>Полное сопровождение</h4><span>Помогаем на всех этапах — от выбора до оформления</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BENEFITS ===== -->
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Почему с нами</div>
+      <h2>Не просто находим авто — отвечаем за результат</h2>
+    </div>
+    <div class="benefits">
+      <div class="benefit reveal"><div class="mark"></div><h3>Опытный автоэксперт</h3><p>Знаем рынок и подбираем варианты, которые реально стоят своих денег.</p></div>
+      <div class="benefit reveal"><div class="mark"></div><h3>Проверка техники</h3><p>Диагностика двигателя, кузова и электроники перед покупкой.</p></div>
+      <div class="benefit reveal"><div class="mark"></div><h3>Юридическая чистота</h3><p>Проверяем историю, ограничения и документы, чтобы не было сюрпризов.</p></div>
+      <div class="benefit reveal"><div class="mark"></div><h3>Работа по договору</h3><p>Фиксируем условия и сопровождаем сделку официально.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STEPS ===== -->
+<section class="block">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Как это работает</div>
+      <h2>Три шага до вашего автомобиля</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="n">Шаг 01</div><h3>Каталог в МАКС</h3><p>Открываете каталог в мессенджере и смотрите актуальные варианты.</p></div>
+      <div class="step reveal"><div class="n">Шаг 02</div><h3>Подбор и проверка</h3><p>Эксперт помогает выбрать, проверяет техническое состояние и документы.</p></div>
+      <div class="step reveal"><div class="n">Шаг 03</div><h3>Сопровождение сделки</h3><p>Помогаем с торгом, оформлением и передачей автомобиля.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATALOG CTA ===== -->
+<section class="catalog" id="catalog">
+  <div class="band" aria-hidden="true"></div>
+  <div class="wrap catalog-in reveal">
+    <div class="eyebrow">Весь каталог — в мессенджере</div>
+    <h2>Смотрите актуальные<br>варианты в <span class="max" style="font-size:.9em">МАКС</span></h2>
+    <p>Открывается за секунды. Новые предложения, цены и фото — в одном канале. Задать вопрос эксперту можно прямо там.</p>
+    <div class="cta-row">
+      <!-- ЗАМЕНИ href на ссылку вашего канала/каталога в МАКС -->
+      <a class="btn btn--lg" href="https://max.ru/join/glXZWQK4GgrXRSErrwurHMcJAwuxiQA-AGvKckqP5Hs" target="_blank" rel="noopener" data-goal="catalog">Смотреть каталог в МАКС <span class="arw">→</span></a>
+    </div>
+    <div class="sub">Бесплатно · без регистрации на сайте</div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">АВТО<b>·</b>ПОДБОР</div>
+        <p class="foot-req">
+          ООО «Импульс-Транс»<br>
+          214009, Смоленская область, г. Смоленск, п. Тихвинка, д. 71, офис 2<br>
+          ИНН 6732230250 · КПП 673201001 · ОГРН 1226700009865<br>
+          ОКПО 51153834 · БИК 66401000000 · К/С 66701000001<br>
+          Услуги по подбору и сопровождению покупки автомобилей. Оказание услуг осуществляется на основании договора.
+        </p>
+      </div>
+      <div class="foot-contact">
+        <span>Телефон</span>
+        <a href="tel:+79226816002">+7 (922) 681-60-02</a>
+      </div>
+    </div>
+    <p class="disclaimer">
+      Информация на сайте носит справочный характер и не является публичной офертой.
+      Стоимость и условия услуг уточняйте у специалиста. © <span id="yr"></span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // scroll reveal
+  const io = new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%4*70)+'ms'; io.observe(el); });
+
+  // Цель Яндекс.Метрики на клик по каталогу (подставь номер счётчика)
+  document.querySelectorAll('[data-goal="catalog"]').forEach(a=>{
+    a.addEventListener('click',()=>{
+      // if(window.ym){ ym(XXXXXXXX,'reachGoal','catalog_click'); }
+      console.log('catalog_click');
+    });
+  });
+</script>
+</body>
+</html>
