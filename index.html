@@ -31,6 +31,12 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111853919" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Яндекс.Метрика -->
+<!-- VK Пиксель -->
+<script type="text/javascript">
+  !function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://vk.com/js/api/openapi.js?169",t.onload=function(){VK.Retargeting.Init("VK-RTRG-3791377"),VK.Retargeting.Hit()},document.head.appendChild(t)}();
+</script>
+<noscript><img src="https://vk.com/rtrg?p=VK-RTRG-3791377" style="position:fixed; left:-999px;" alt=""></noscript>
+<!-- /VK Пиксель -->
 <script src="https://max.tgtrack.ru/API/landing_script/v1/?linkID=f359d408002dc&type=ya&counterID=111853919" type="text/javascript" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -405,6 +411,7 @@
   document.querySelectorAll('[data-goal="catalog"]').forEach(a=>{
     a.addEventListener('click',()=>{
       if(window.ym){ ym(111853919,'reachGoal','catalog_click'); }
+      if(window.VK && VK.Retargeting){ VK.Retargeting.Event('catalog_click'); }
       console.log('catalog_click');
     });
   });
